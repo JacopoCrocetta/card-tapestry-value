@@ -14,7 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      card_prices: {
+        Row: {
+          card_id: string
+          condition: Database["public"]["Enums"]["card_condition"]
+          currency: string
+          id: string
+          price: number
+          recorded_at: string
+          source: string | null
+        }
+        Insert: {
+          card_id: string
+          condition: Database["public"]["Enums"]["card_condition"]
+          currency?: string
+          id?: string
+          price: number
+          recorded_at?: string
+          source?: string | null
+        }
+        Update: {
+          card_id?: string
+          condition?: Database["public"]["Enums"]["card_condition"]
+          currency?: string
+          id?: string
+          price?: number
+          recorded_at?: string
+          source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "card_prices_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cards: {
+        Row: {
+          card_number: string | null
+          created_at: string
+          description: string | null
+          game: Database["public"]["Enums"]["game_type"]
+          id: string
+          image_url: string | null
+          name: string
+          rarity: string | null
+          set_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          card_number?: string | null
+          created_at?: string
+          description?: string | null
+          game: Database["public"]["Enums"]["game_type"]
+          id?: string
+          image_url?: string | null
+          name: string
+          rarity?: string | null
+          set_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          card_number?: string | null
+          created_at?: string
+          description?: string | null
+          game?: Database["public"]["Enums"]["game_type"]
+          id?: string
+          image_url?: string | null
+          name?: string
+          rarity?: string | null
+          set_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_collections: {
+        Row: {
+          card_id: string
+          condition: Database["public"]["Enums"]["card_condition"]
+          created_at: string
+          id: string
+          notes: string | null
+          purchase_date: string | null
+          purchase_price: number | null
+          quantity: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          card_id: string
+          condition?: Database["public"]["Enums"]["card_condition"]
+          created_at?: string
+          id?: string
+          notes?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          card_id?: string
+          condition?: Database["public"]["Enums"]["card_condition"]
+          created_at?: string
+          id?: string
+          notes?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_collections_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +176,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      card_condition:
+        | "mint"
+        | "near_mint"
+        | "light_play"
+        | "moderate_play"
+        | "heavy_play"
+        | "damaged"
+      game_type: "yugioh" | "mtg" | "pokemon"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +310,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      card_condition: [
+        "mint",
+        "near_mint",
+        "light_play",
+        "moderate_play",
+        "heavy_play",
+        "damaged",
+      ],
+      game_type: ["yugioh", "mtg", "pokemon"],
+    },
   },
 } as const
